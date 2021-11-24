@@ -4,6 +4,7 @@ describe Oystercard do
 let(:oystercard) { described_class.new}
 let(:oyster1) {double :oystercard}
 let(:station) {double :station}
+let(:station_out) {double :station}
 
   
 # User story 
@@ -39,7 +40,7 @@ let(:station) {double :station}
 
   it ' will deduct the money from balance'do
     oystercard.top_up(30)
-    oystercard.touch_out
+    oystercard.touch_out(station_out)
     expect(oystercard.balance).to eq(29)
   end
 
@@ -56,7 +57,7 @@ let(:station) {double :station}
   it 'will confirm if oyster has been touched out' do
     oystercard.top_up(30)
     oystercard.touch_in(station)
-    oystercard.touch_out
+    oystercard.touch_out(station_out)
     expect(oystercard.entry_station).to be(nil)
   end 
 
@@ -66,12 +67,30 @@ let(:station) {double :station}
 
   it 'will confirm that oyster has been charged' do
     oystercard.top_up(30)
-    expect{oystercard.touch_out}.to change{oystercard.balance}.by -1
+    expect{oystercard.touch_out(station_out)}.to change{oystercard.balance}.by -1
   end
 
   it 'will remember the entry station after the touch in' do
     oystercard.top_up(30)
     oystercard.touch_in(station)
     expect(oystercard.entry_station).to match_array(station)
+  end
+
+  it 'checks journeys have been saved' do
+    oystercard.top_up(90)
+    oystercard.touch_in(station)
+    oystercard.touch_out(station_out)
+    expect(oystercard.journeys).to match_array([ entry: station, exit_station: station_out ])
+  end
+
+  it 'stores a complete journey' do
+    oystercard.top_up(90)
+    oystercard.touch_in(station)
+    oystercard.touch_out(station_out)
+    expect(oystercard.journeys[0]).to eq({ entry: station, exit_station: station_out })
+  end
+
+  it 'has no stored journeys by default' do
+    expect(oystercard.journeys).to match_array([])
   end
 end
