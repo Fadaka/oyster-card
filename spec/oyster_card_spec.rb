@@ -57,8 +57,9 @@ let(:station) {double :station}
     oystercard.top_up(30)
     oystercard.touch_in(station)
     oystercard.touch_out
-    expect(oystercard.in_journey).to be(false)
+    expect(oystercard.entry_station).to be(nil)
   end 
+
   it 'will not allow journey with insufficient funds' do
     expect{oystercard.touch_in(station)}.to raise_error(RuntimeError, 'insufficient funds') 
   end

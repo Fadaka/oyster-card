@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/michaelkassim/Desktop/projects/oyster_project/oyster-card/spec/oyster_card_spec.rb": {
+      "/Users/sherwinpanganiban/Desktop/Projects/Makers/week-2/oyster-card/spec/oyster_card_spec.rb": {
         "lines": [
           1,
           null,
@@ -64,6 +64,7 @@
           1,
           1,
           null,
+          null,
           1,
           2,
           null,
@@ -81,7 +82,7 @@
           null
         ]
       },
-      "/Users/michaelkassim/Desktop/projects/oyster_project/oyster-card/lib/oyster_card.rb": {
+      "/Users/sherwinpanganiban/Desktop/Projects/Makers/week-2/oyster-card/lib/oyster_card.rb": {
         "lines": [
           1,
           1,
@@ -92,7 +93,6 @@
           1,
           10,
           10,
-          10,
           null,
           null,
           null,
@@ -109,11 +109,8 @@
           1,
           null,
           null,
-          3,
-          null,
           null,
           1,
-          3,
           3,
           3,
           null,
@@ -132,6 +129,6 @@
         ]
       }
     },
-    "timestamp": 1637686551
+    "timestamp": 1637765021
   }
 }
