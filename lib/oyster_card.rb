@@ -30,9 +30,14 @@ class Oystercard
 
   def touch_out(station_out)
     #penalizes no touch in(incomplete) journey
-    @journey.exit_station = station_out
-    @journeys << @journey
-    deduct(@journey.fare)
+    if in_journey? == false
+      @journeys << @journey 
+      deduct(@journey.fare)
+    else
+      @journey.exit_station = station_out
+      @journeys << @journey
+      deduct(@journey.fare)
+    end
     @entry_station = nil
   end
 
