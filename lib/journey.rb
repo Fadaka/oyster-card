@@ -17,6 +17,8 @@ class Journey
   end
 
   def fare
+    @fare = MINIMUM_FARE if completed?
     @fare
   end
+
 end

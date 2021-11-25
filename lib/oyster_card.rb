@@ -7,36 +7,42 @@ class Oystercard
 
   def initialize
     @balance = 0
-    @entry_station = []
     @journeys = []
     @journey = Journey.new
+    @entry_station = nil
   end
 
-  def top_up(money)
-    @balance += money
+  def top_up(amount)
+    @balance += amount
     raise 'Can not exceed more than £90.' if @balance > MAXIMUM_BALANCE
   end
 
   def touch_in(station)
-    @entry_station << station
-    @journey = Journey.new(entry_station)
+    #penalizes no touch out (incomplete) journey 
+    if in_journey?
+      @journeys << @journey 
+      deduct(@journey.fare)
+    end
+    @entry_station = station
+    @journey = Journey.new(station)
     raise 'insufficient funds' if MINIMUM_FARE > @balance
   end
 
   def touch_out(station_out)
+    #penalizes no touch in(incomplete) journey
     @journey.exit_station = station_out
     @journeys << @journey
+    deduct(@journey.fare)
     @entry_station = nil
-    deduct(MINIMUM_FARE)
   end
 
   def in_journey?
-    @entry_station.empty? == false
+    @entry_station != nil 
   end
 
   private
 
-  def deduct(money)
-    @balance -= money
+  def deduct(fare)
+    @balance -= fare
   end
 end
