@@ -4,6 +4,7 @@ require 'oyster_card'
 
 describe Oystercard do
   let(:oystercard) { described_class.new }
+  let(:prepaid_oyster) { described_class.new(Oystercard::MAXIMUM_BALANCE) }
   let(:oyster1) { double :oystercard }
   let(:station) { double :station }
   let(:station_out) { double :station }
@@ -18,24 +19,30 @@ describe Oystercard do
   end
 
   it 'raise an error if balance above maximumm limit' do
-    expect { oystercard.top_up(100) }.to raise_error('Can not exceed more than £90.')
+    expect do
+      oystercard.top_up(Oystercard::MAXIMUM_BALANCE + Oystercard::MINIMUM_FARE)
+    end.to raise_error('Can not exceed more than £90.')
   end
 
-  it 'will confirm it is in journey' do
+  it 'will confirm whether it is default not in journey' do
     expect(oystercard.in_journey?).to be(false)
   end
 
+  it 'records incomplete journey' do
+    prepaid_oyster.touch_in(station)
+    prepaid_oyster.touch_in(station)
+    expect(prepaid_oyster.journeys.length).to be(1)
+  end
+
   it 'will confirm if oyster has been touched in' do
-    oystercard.top_up(30)
-    oystercard.touch_in(station)
-    expect(oystercard.in_journey?).to be(true)
+    prepaid_oyster.touch_in(station)
+    expect(prepaid_oyster.in_journey?).to be(true)
   end
 
   it 'will confirm if oyster has been touched out' do
-    oystercard.top_up(30)
-    oystercard.touch_in(station)
-    oystercard.touch_out(station_out)
-    expect(oystercard.entry_station).to be(nil)
+    prepaid_oyster.touch_in(station)
+    prepaid_oyster.touch_out(station_out)
+    expect(prepaid_oyster.entry_station).to be(nil)
   end
 
   it 'will not allow journey with insufficient funds' do
@@ -43,28 +50,24 @@ describe Oystercard do
   end
 
   it 'will confirm that oyster has been charged' do
-    oystercard.top_up(30)
-    expect { oystercard.touch_out(station_out) }.to change { oystercard.balance }.by(-6)
+    expect { prepaid_oyster.touch_out(station_out) }.to change { prepaid_oyster.balance }.by(-6)
   end
 
   it 'will remember the entry station after the touch in' do
-    oystercard.top_up(30)
-    oystercard.touch_in(station)
-    expect(oystercard.entry_station).to eq(station)
+    prepaid_oyster.touch_in(station)
+    expect(prepaid_oyster.entry_station).to eq(station)
   end
 
   it 'checks journeys have been saved' do
-    oystercard.top_up(90)
-    oystercard.touch_in(station)
-    oystercard.touch_out(station_out)
-    expect(oystercard.journeys).to match_array([oystercard.journey])
+    prepaid_oyster.touch_in(station)
+    prepaid_oyster.touch_out(station_out)
+    expect(prepaid_oyster.journeys).to match_array([prepaid_oyster.journey])
   end
 
   it 'stores a complete journey' do
-    oystercard.top_up(90)
-    oystercard.touch_in(station)
-    oystercard.touch_out(station_out)
-    expect(oystercard.journeys.last).to eq(oystercard.journey)
+    prepaid_oyster.touch_in(station)
+    prepaid_oyster.touch_out(station_out)
+    expect(prepaid_oyster.journeys.last).to eq(prepaid_oyster.journey)
   end
 
   it 'has no stored journeys by default' do

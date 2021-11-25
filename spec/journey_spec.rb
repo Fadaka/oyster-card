@@ -27,7 +27,7 @@ describe Journey do
     expect(journey.fare).to eq(Journey::PENALTY_FARE)
   end
 
-  it 'deducts the minimum fare on a completed journey 'do
-    expect(journey.fare).to eq(Journey::MINIMUM_FARE) if journey.completed? 
+  it 'deducts the minimum fare on a completed journey ' do
+    expect(journey.fare).to eq(Journey::MINIMUM_FARE) if journey.completed?
   end
 end

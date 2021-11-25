@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-MAXIMUM_BALANCE = 90
-MINIMUM_FARE = 1
 class Oystercard
+  MAXIMUM_BALANCE = 90
+  MINIMUM_FARE = 1
   attr_reader :balance, :entry_station, :journeys, :journey, :entry, :exit_station
 
-  def initialize
-    @balance = 0
+  def initialize(balance = 0)
+    @balance = balance
     @journeys = []
     @journey = Journey.new
     @entry_station = nil
@@ -18,9 +18,9 @@ class Oystercard
   end
 
   def touch_in(station)
-    #penalizes no touch out (incomplete) journey 
+    # penalizes no touch out (incomplete) journey
     if in_journey?
-      @journeys << @journey 
+      @journeys << @journey
       deduct(@journey.fare)
     end
     @entry_station = station
@@ -29,20 +29,18 @@ class Oystercard
   end
 
   def touch_out(station_out)
-    #penalizes no touch in(incomplete) journey
+    # penalizes no touch in(incomplete) journey
     if in_journey? == false
-      @journeys << @journey 
-      deduct(@journey.fare)
     else
       @journey.exit_station = station_out
-      @journeys << @journey
-      deduct(@journey.fare)
     end
+    @journeys << @journey
+    deduct(@journey.fare)
     @entry_station = nil
   end
 
   def in_journey?
-    @entry_station != nil 
+    @entry_station != nil
   end
 
   private

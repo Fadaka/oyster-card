@@ -20,5 +20,4 @@ class Journey
     @fare = MINIMUM_FARE if completed?
     @fare
   end
-
 end
