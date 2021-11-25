@@ -11,4 +11,12 @@ class Journey
     @exit_station = exit_station
     @fare = fare
   end
+
+  def completed?
+    @entry_station && @exit_station
+  end
+
+  def fare
+    @fare
+  end
 end

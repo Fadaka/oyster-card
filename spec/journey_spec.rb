@@ -19,6 +19,10 @@ describe Journey do
     expect(journey.exit_station).to eq(station2)
   end
 
+  it 'shows whether a journey is complete' do
+    expect(journey.completed?).to be_falsy.or be_truthy
+  end
+
   it 'will penalise by default' do
     expect(journey.fare).to eq(Journey::PENALTY_FARE)
   end
