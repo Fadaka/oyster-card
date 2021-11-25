@@ -21,12 +21,6 @@ describe Oystercard do
     expect { oystercard.top_up(100) }.to raise_error('Can not exceed more than £90.')
   end
 
-  it ' will deduct the money from balance' do
-    oystercard.top_up(30)
-    oystercard.touch_out(station_out)
-    expect(oystercard.balance).to eq(29)
-  end
-
   it 'will confirm it is in journey' do
     expect(oystercard.in_journey?).to be(false)
   end
@@ -50,13 +44,13 @@ describe Oystercard do
 
   it 'will confirm that oyster has been charged' do
     oystercard.top_up(30)
-    expect { oystercard.touch_out(station_out) }.to change { oystercard.balance }.by(-1)
+    expect { oystercard.touch_out(station_out) }.to change { oystercard.balance }.by(-6)
   end
 
   it 'will remember the entry station after the touch in' do
     oystercard.top_up(30)
     oystercard.touch_in(station)
-    expect(oystercard.entry_station).to match_array(station)
+    expect(oystercard.entry_station).to eq(station)
   end
 
   it 'checks journeys have been saved' do
