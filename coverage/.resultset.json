@@ -3,33 +3,51 @@
     "coverage": {
       "/Users/michaelkassim/Desktop/projects/oyster_project/oyster-card/spec/journey_spec.rb": {
         "lines": [
+          null,
+          null,
           1,
           1,
           1,
           null,
+          1,
+          5,
           1,
           2,
           1,
-          1,
           null,
           1,
           1,
           null,
           null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
           null,
           null
         ]
       },
       "/Users/michaelkassim/Desktop/projects/oyster_project/oyster-card/lib/journey.rb": {
         "lines": [
+          null,
+          null,
+          1,
           1,
           1,
           null,
           1,
+          null,
           1,
-          null,
-          null,
-          null,
+          23,
+          23,
+          23,
           null,
           null
         ]
@@ -88,8 +106,8 @@
           1,
           null,
           1,
-          2,
-          2,
+          3,
+          3,
           null,
           null
         ]
@@ -197,6 +215,6 @@
         ]
       }
     },
-    "timestamp": 1637837227
+    "timestamp": 1637849310
   }
 }

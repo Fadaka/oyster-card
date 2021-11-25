@@ -9,7 +9,7 @@ class Oystercard
     @balance = 0
     @entry_station = []
     @journeys = []
-    @journey = {}
+    @journey = Journey.new
   end
 
   def top_up(money)
@@ -19,12 +19,12 @@ class Oystercard
 
   def touch_in(station)
     @entry_station << station
-    @journey[:entry] = station
+    @journey = Journey.new(entry_station)
     raise 'insufficient funds' if MINIMUM_FARE > @balance
   end
 
   def touch_out(station_out)
-    @journey[:exit_station] = station_out
+    @journey.exit_station = station_out
     @journeys << @journey
     @entry_station = nil
     deduct(MINIMUM_FARE)

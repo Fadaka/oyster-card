@@ -1,10 +1,14 @@
+# frozen_string_literal: true
+
 class Journey
-attr_reader :entry_station
+  PENALTY_FARE = 6
+  MINIMUM_FARE = 1
 
-    def initialize(entry_station=nil)
-        @entry_station = entry_station
-    end
+  attr_accessor :entry_station, :exit_station, :fare
 
-
-
+  def initialize(entry_station = nil, exit_station = nil, fare = PENALTY_FARE)
+    @entry_station = entry_station
+    @exit_station = exit_station
+    @fare = fare
+  end
 end

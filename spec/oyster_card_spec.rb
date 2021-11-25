@@ -63,14 +63,14 @@ describe Oystercard do
     oystercard.top_up(90)
     oystercard.touch_in(station)
     oystercard.touch_out(station_out)
-    expect(oystercard.journeys).to match_array([entry: station, exit_station: station_out])
+    expect(oystercard.journeys).to match_array([oystercard.journey])
   end
 
   it 'stores a complete journey' do
     oystercard.top_up(90)
     oystercard.touch_in(station)
     oystercard.touch_out(station_out)
-    expect(oystercard.journeys[0]).to eq({ entry: station, exit_station: station_out })
+    expect(oystercard.journeys.last).to eq(oystercard.journey)
   end
 
   it 'has no stored journeys by default' do
